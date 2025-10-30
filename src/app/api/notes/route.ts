@@ -3,6 +3,7 @@ import { RawNoteInput } from "@/lib/schemas";
 import { systemPrompt, userPrompt, safeParseLLMJson } from "@/lib/llm";
 import { supabase } from "@/lib/supabase";
 import { extractMedications } from "@/lib/llmMedicationExtractor"; // ✅ added
+import { detectLanguage, translateTo } from "@/lib/translate";
 import OpenAI from "openai";
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
@@ -14,7 +15,11 @@ export async function POST(req: NextRequest) {
   if (!parsed.success)
     return NextResponse.json({ error: "Invalid payload" }, { status: 400 });
 
-  const { memberName, memberId, activityType, sessionDate, freeText } = parsed.data;
+  const { memberName, memberId, activityType, sessionDate, freeText, language } = parsed.data;
+
+  // Detect source language and get English text for processing
+  const detected = language || (await detectLanguage(freeText));
+  const freeTextEn = detected === "es" ? await translateTo(freeText, "en") : freeText;
 
   if (!process.env.OPENAI_API_KEY) {
     const finalMemberName = memberName || "Unknown";
@@ -55,7 +60,7 @@ export async function POST(req: NextRequest) {
       model: "gpt-4.1-mini",
       input: [
         { role: "system", content: systemPrompt },
-        { role: "user", content: userPrompt(freeText) },
+        { role: "user", content: userPrompt(freeTextEn) },
       ],
     }),
   });
@@ -72,8 +77,16 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const medications = await extractMedications(freeText);
+  const medications = await extractMedications(freeTextEn);
   parsedJson.medications = medications;
+
+  // Attach i18n: store raw and translated summary (en/es)
+  const i18n: any = { sourceLang: detected, raw: { en: freeTextEn } };
+  if (detected === "es") {
+    i18n.raw.es = freeText;
+    i18n.summary = { en: parsedJson.summary, es: await translateTo(parsedJson.summary, "es") };
+  }
+  parsedJson.i18n = i18n;
 
   // Use memberId if provided, otherwise use LLM-extracted name, then fallback to provided name
   const finalMemberId = memberId;
@@ -93,7 +106,17 @@ export async function POST(req: NextRequest) {
   // Compute "summary so far" up to this note's timestamp and persist into structured_json
   try {
     const summary = await generateSummarySoFar(inserted.member_id, inserted.created_at);
-    const updatedStructured = { ...(parsedJson || {}), soFarSummary: summary };
+    let updatedStructured: any = { ...(parsedJson || {}), soFarSummary: summary };
+    if (detected === "es") {
+      const summaryEs = await translateTo(summary, "es");
+      updatedStructured = {
+        ...updatedStructured,
+        i18n: {
+          ...(parsedJson.i18n || {}),
+          soFarSummary: { en: summary, es: summaryEs },
+        },
+      };
+    }
     await supabase
       .from("notes")
       .update({ structured_json: updatedStructured })

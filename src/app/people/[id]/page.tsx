@@ -18,6 +18,8 @@ export default function MemberNotesPage() {
   const [selectedDate, setSelectedDate] = useState<string>("");
   const [showInsights, setShowInsights] = useState(false);
   const todayKey = useMemo(() => new Date().toISOString().split("T")[0], []);
+  // Per-note language selection
+  const [noteLang, setNoteLang] = useState<Record<string, "en" | "es">>({});
 
   // Add Note modal states
   const [showAddNote, setShowAddNote] = useState(false);
@@ -176,7 +178,7 @@ export default function MemberNotesPage() {
       </div>
 
       {/* Date Selector */}
-      <div className="flex gap-3 mb-6">
+      <div className="flex gap-3 mb-6 items-center">
         <label className="text-sm font-medium text-gray-700 mt-2">
           Select Date:
         </label>
@@ -191,6 +193,7 @@ export default function MemberNotesPage() {
             </option>
           ))}
         </select>
+
       </div>
 
       {/* Paired layout: each row contains the note (left) and its details (right) */}
@@ -209,24 +212,44 @@ export default function MemberNotesPage() {
               minute: "2-digit",
             });
             const meds = n.structured_json?.medications || [];
-            const summary = summaries[n.id] || n.structured_json?.soFarSummary || "Generating summary...";
+            const lang = noteLang[n.id] || "en";
+            const summary =
+              lang === "es"
+                ? n.structured_json?.i18n?.soFarSummary?.es || n.structured_json?.soFarSummary || summaries[n.id] || "Generando resumen..."
+                : n.structured_json?.soFarSummary || summaries[n.id] || "Generating summary...";
             return (
               <Fragment key={`row-${n.id || i}`}>
                 <div key={`left-${i}`} className="border-r pr-4">
-                  <p className="text-xs text-gray-500 mb-1">{timeLabel}</p>
+                  <div className="flex items-center justify-between mb-1">
+                    <p className="text-xs text-gray-500">{timeLabel}</p>
+                  </div>
                   <div className="bg-white border rounded-lg p-3 shadow-sm h-full">
                     <p className="text-sm font-medium text-gray-800 mb-2">
                       {structured.activityType || "Session"}
                     </p>
                     <p className="text-xs text-gray-600 leading-snug">
-                      {structured.summary || n.raw_text || "No summary available"}
+                      {lang === "es"
+                        ? structured.i18n?.summary?.es || structured.summary || structured.i18n?.raw?.es || n.raw_text || "Sin resumen"
+                        : structured.summary || structured.i18n?.raw?.en || n.raw_text || "No summary available"}
                     </p>
                   </div>
                 </div>
                 <div key={`right-${i}`} className="bg-white border rounded-lg p-3 shadow-sm">
-                  <div className="text-xs text-gray-500 mb-2">{timeLabel}</div>
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="text-xs text-gray-500">{timeLabel}</div>
+                    <select
+                      className="border rounded-md px-2 py-1 text-xs"
+                      value={lang}
+                      onChange={(e) =>
+                        setNoteLang((prev) => ({ ...prev, [n.id]: e.target.value as any }))
+                      }
+                    >
+                      <option value="en">EN</option>
+                      <option value="es">ES</option>
+                    </select>
+                  </div>
                   <div className="mb-3">
-                    <p className="text-sm font-semibold text-gray-800">Medications</p>
+                    <p className="text-sm font-semibold text-gray-800">{lang === "es" ? "Medicamentos" : "Medications"}</p>
                     {meds.length > 0 ? (
                       <ul className="mt-1 space-y-1">
                         {meds.map((m: any, idx: number) => (
@@ -239,11 +262,11 @@ export default function MemberNotesPage() {
                         ))}
                       </ul>
                     ) : (
-                      <p className="text-xs text-gray-500">No medications recorded.</p>
+                      <p className="text-xs text-gray-500">{lang === "es" ? "No hay medicamentos registrados." : "No medications recorded."}</p>
                     )}
                   </div>
                   <div>
-                    <p className="text-sm font-semibold text-gray-800">Summary so far</p>
+                    <p className="text-sm font-semibold text-gray-800">{lang === "es" ? "Resumen hasta ahora" : "Summary so far"}</p>
                     <p className="text-xs text-gray-700 leading-relaxed mt-1">{summary}</p>
                   </div>
                   <QuickActions note={n} />
