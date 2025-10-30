@@ -86,7 +86,7 @@ export async function POST(req: NextRequest) {
     i18n.raw.es = freeText;
     i18n.summary = { en: parsedJson.summary, es: await translateTo(parsedJson.summary, "es") };
   }
-  parsedJson.i18n = i18n;
+  (parsedJson as any).i18n = i18n;
 
   // Use memberId if provided, otherwise use LLM-extracted name, then fallback to provided name
   const finalMemberId = memberId;
