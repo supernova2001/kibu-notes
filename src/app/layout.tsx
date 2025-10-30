@@ -45,7 +45,6 @@ export default function RootLayout({
 function Sidebar() {
   const links = [
     { name: "Home", href: "/", icon: Home },
-    { name: "People", href: "/people", icon: Users },
   ];
 
   return (
