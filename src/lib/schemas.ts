@@ -2,7 +2,8 @@ import { z } from "zod";
 
 // Input payload
 export const RawNoteInput = z.object({
-  memberName: z.string().min(1),
+  memberName: z.string().min(1).optional(),
+  memberId: z.string().uuid().optional(),
   activityType: z.string().min(1),
   sessionDate: z.string().min(1),
   freeText: z.string().min(5),

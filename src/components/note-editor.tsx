@@ -6,11 +6,21 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { StructuredNoteType } from "@/lib/schemas";
+import { useToast } from "@/components/ui/toast";
 
-export default function NoteEditor({ transcript }: { transcript: string }) {
+export default function NoteEditor({
+  transcript,
+  memberId,
+  memberName,
+}: {
+  transcript: string;
+  memberId?: string;
+  memberName?: string;
+}) {
   const [freeText, setFreeText] = useState(transcript);
   const [loading, setLoading] = useState(false);
   const [note, setNote] = useState<StructuredNoteType | null>(null);
+  const { toast } = useToast();
 
   const [missingFields, setMissingFields] = useState<string[]>([]);
   const [showModal, setShowModal] = useState(false);
@@ -34,6 +44,10 @@ export default function NoteEditor({ transcript }: { transcript: string }) {
     console.log(freeText)
     const data = await res.json();
     setLoading(false);
+    if (!res.ok) {
+      toast({ title: "Validation failed", description: "Could not validate note.", variant: "error" });
+      return;
+    }
 
     // If missing fields, show modal to collect them
     if (data.missing?.length > 0) {
@@ -70,7 +84,8 @@ export default function NoteEditor({ transcript }: { transcript: string }) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        memberName: extraDetails["member name"] || "Unknown",
+        memberId: memberId,
+        memberName: memberName || extraDetails["member name"] || undefined,
         activityType: extraDetails["activity type"] || "General",
         sessionDate: new Date().toISOString(),
         freeText: text,
@@ -81,8 +96,12 @@ export default function NoteEditor({ transcript }: { transcript: string }) {
     const data = await res.json();
     setLoading(false);
 
-    if (res.ok) setNote(data);
-    else alert("Error: " + (data.error || "Failed to generate note"));
+    if (res.ok) {
+      setNote(data);
+      toast({ title: "Note saved", description: "Summary and medications extracted.", variant: "success" });
+    } else {
+      toast({ title: "Save failed", description: data.error || "Failed to generate note", variant: "error" });
+    }
   };
 
   return (

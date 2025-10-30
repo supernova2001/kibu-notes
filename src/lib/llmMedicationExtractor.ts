@@ -3,33 +3,35 @@ const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 /**
  * Extracts medication info (name, dose, route, time, status) from caregiver note.
+ * Uses strict JSON schema via the Responses API to ensure valid JSON.
  */
 export async function extractMedications(noteText: string) {
-  const prompt = `
-You are a clinical documentation assistant.
-Extract all medication administration details from the caregiver note below.
-Return a JSON array with the following fields for each medication:
-- name
-- dose
-- route
-- time
-- status ("Given", "Missed", "Refused", or null)
+  if (!process.env.OPENAI_API_KEY) {
+    return [];
+  }
 
-If no medication is mentioned, return [].
-Note:
-"""${noteText}"""
-`;
+  const system = "Extract medication administrations from caregiver notes. Return strict JSON only.";
+  const user = `Return an object of the form {"medications": [{"name": string|null, "dose": string|null, "route": string|null, "time": string|null, "status": "given"|"offered"|"refused"|"missed"|"unknown"|null}]}.
+If no medications are mentioned, return {"medications": []}.
+Do not include any text outside of JSON.
 
-  const response = await openai.chat.completions.create({
+Note:\n${noteText}`;
+
+  const completion = await openai.chat.completions.create({
     model: "gpt-4o-mini",
     temperature: 0,
-    messages: [{ role: "user", content: prompt }],
+    response_format: { type: "json_object" },
+    messages: [
+      { role: "system", content: system },
+      { role: "user", content: user },
+    ],
   });
 
-  const text = response.choices?.[0]?.message?.content?.trim() ?? "[]";
+  const text = completion.choices?.[0]?.message?.content ?? "{\"medications\":[]}";
 
   try {
-    return JSON.parse(text);
+    const parsed = JSON.parse(text);
+    return Array.isArray(parsed?.medications) ? parsed.medications : [];
   } catch {
     return [];
   }

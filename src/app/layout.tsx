@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
 import { Home, Users } from "lucide-react";
 import "./globals.css";
+import { Toaster } from "@/components/ui/toast";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,8 +30,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50 text-gray-900 flex min-h-screen`}
       >
-        <Sidebar />
-        <main className="flex-1 p-6 overflow-y-auto">{children}</main>
+        <Toaster>
+          <Sidebar />
+          <main className="flex-1 p-6 overflow-y-auto">{children}</main>
+        </Toaster>
       </body>
     </html>
   );
