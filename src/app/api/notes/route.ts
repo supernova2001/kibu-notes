@@ -112,7 +112,7 @@ export async function POST(req: NextRequest) {
       updatedStructured = {
         ...updatedStructured,
         i18n: {
-          ...(parsedJson.i18n || {}),
+          ...(((parsedJson as any).i18n) || {}),
           soFarSummary: { en: summary, es: summaryEs },
         },
       };
