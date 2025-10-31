@@ -86,14 +86,14 @@ export default function PeoplePage() {
   }
 
   return (
-    <div className="p-8 w-full">
+    <div className="p-3 sm:p-4 md:p-6 lg:p-8 w-full">
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-semibold text-gray-800">People & Notes</h1>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+        <h1 className="text-xl sm:text-2xl font-semibold text-gray-800">People & Notes</h1>
         <div className="flex gap-3">
           <button
             onClick={() => setShowAddModal(true)}
-            className="px-4 py-2 bg-green-600 text-white rounded-md text-sm hover:bg-green-700"
+            className="px-4 py-2 bg-green-600 text-white rounded-md text-sm hover:bg-green-700 whitespace-nowrap"
           >
             + Add Member
           </button>
@@ -101,19 +101,19 @@ export default function PeoplePage() {
       </div>
 
       {/* Search & Filter */}
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex gap-2">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
+        <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
           <input
             type="text"
             placeholder="Search members..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="border px-3 py-1.5 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-gray-300"
+            className="border px-3 py-1.5 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-gray-300 w-full sm:w-auto"
           />
           <select
             value={activityFilter}
             onChange={(e) => setActivityFilter(e.target.value)}
-            className="border px-3 py-1.5 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-gray-300"
+            className="border px-3 py-1.5 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-gray-300 w-full sm:w-auto"
           >
             <option value="All">All Activities</option>
             <option value="Yoga">Yoga</option>
@@ -125,7 +125,7 @@ export default function PeoplePage() {
       </div>
 
       {/* Summary Info */}
-      <div className="mb-6 text-sm text-gray-600 flex gap-6">
+      <div className="mb-6 text-xs sm:text-sm text-gray-600 flex flex-wrap gap-4 sm:gap-6">
         <div>
           Total Members: <b>{people.length}</b>
         </div>
@@ -205,8 +205,8 @@ export default function PeoplePage() {
         className="relative z-50"
       >
         <div className="fixed inset-0 bg-black/40 backdrop-blur-sm" />
-        <div className="fixed inset-0 flex items-center justify-center p-4">
-          <Dialog.Panel className="bg-white w-full max-w-md rounded-lg shadow-lg p-6">
+        <div className="fixed inset-0 flex items-center justify-center p-2 sm:p-4">
+          <Dialog.Panel className="bg-white w-full max-w-md rounded-lg shadow-lg p-4 sm:p-6">
             <Dialog.Title className="text-lg font-semibold mb-4">
               Add New Member
             </Dialog.Title>
@@ -219,17 +219,17 @@ export default function PeoplePage() {
               className="w-full border rounded-md px-3 py-2 text-sm mb-6 focus:outline-none focus:ring-1 focus:ring-gray-300"
             />
 
-            <div className="flex justify-end gap-3">
+            <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-2 sm:gap-3">
               <button
                 onClick={() => setShowAddModal(false)}
-                className="px-4 py-2 text-sm border rounded-md hover:bg-gray-50"
+                className="px-4 py-2 text-sm border rounded-md hover:bg-gray-50 w-full sm:w-auto"
               >
                 Cancel
               </button>
               <button
                 onClick={handleAddMember}
                 disabled={saving || !newMemberName.trim()}
-                className="px-4 py-2 bg-green-600 text-white rounded-md text-sm hover:bg-green-700 disabled:opacity-60"
+                className="px-4 py-2 bg-green-600 text-white rounded-md text-sm hover:bg-green-700 disabled:opacity-60 w-full sm:w-auto"
               >
                 {saving ? 'Saving...' : 'Save'}
               </button>

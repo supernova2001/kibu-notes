@@ -148,25 +148,25 @@ export default function MemberNotesPage() {
   };
 
   return (
-    <div className="p-8 max-w-6xl mx-auto">
+    <div className="p-3 sm:p-4 md:p-6 lg:p-8 max-w-6xl mx-auto">
       {/* Header */}
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
         <div>
-          <h2 className="text-2xl font-semibold mb-1">
+          <h2 className="text-xl sm:text-2xl font-semibold mb-1">
             {member?.name || "Member"}'s Notes
           </h2>
-          <p className="text-sm text-gray-500">
-            Organized by date and time — showing summaries up to each note’s time.
+          <p className="text-xs sm:text-sm text-gray-500">
+            Organized by date and time — showing summaries up to each note's time.
           </p>
         </div>
-        <div className="flex gap-3">
+        <div className="flex flex-wrap gap-2 sm:gap-3">
           <Button
             onClick={() => setShowInsights(true)}
-            className="bg-indigo-600 text-white hover:bg-indigo-700"
+            className="bg-indigo-600 text-white hover:bg-indigo-700 text-sm"
           >
             View Insights
           </Button>
-          <Button onClick={downloadPDF}>Download PDF</Button>
+          <Button onClick={downloadPDF} className="text-sm">Download PDF</Button>
           <Button
             variant="outline"
             onClick={() => router.push("/people")}
@@ -178,14 +178,14 @@ export default function MemberNotesPage() {
       </div>
 
       {/* Date Selector */}
-      <div className="flex gap-3 mb-6 items-center">
-        <label className="text-sm font-medium text-gray-700 mt-2">
+      <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 mb-6 sm:items-center">
+        <label className="text-sm font-medium text-gray-700">
           Select Date:
         </label>
         <select
           value={selectedDate}
           onChange={(e) => setSelectedDate(e.target.value)}
-          className="border rounded-md px-3 py-2 text-sm"
+          className="border rounded-md px-3 py-2 text-sm max-w-xs"
         >
           {Object.keys(groupedNotes).map((date) => (
             <option key={date} value={date}>
@@ -193,18 +193,17 @@ export default function MemberNotesPage() {
             </option>
           ))}
         </select>
-
       </div>
 
       {/* Paired layout: each row contains the note (left) and its details (right) */}
-      <h3 className="font-semibold mb-3 text-gray-800">
+      <h3 className="font-semibold mb-3 text-gray-800 text-base sm:text-lg">
         Timeline for {new Date(selectedDate).toLocaleDateString()}
       </h3>
 
       {notesForSelectedDate.length === 0 ? (
         <p className="text-sm text-gray-500">No notes for this date.</p>
       ) : (
-        <div className="grid grid-cols-[320px_1fr] gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-4 sm:gap-6 lg:gap-8">
           {notesForSelectedDate.map((n, i) => {
             const structured = n.structured_json || {};
             const timeLabel = new Date(n.created_at).toLocaleTimeString([], {
@@ -219,7 +218,7 @@ export default function MemberNotesPage() {
                 : n.structured_json?.soFarSummary || summaries[n.id] || "Generating summary...";
             return (
               <Fragment key={`row-${n.id || i}`}>
-                <div key={`left-${i}`} className="border-r pr-4">
+                <div key={`left-${i}`} className="lg:border-r lg:pr-4 pb-4 lg:pb-0 border-b lg:border-b-0">
                   <div className="flex items-center justify-between mb-1">
                     <p className="text-xs text-gray-500">{timeLabel}</p>
                   </div>
@@ -278,7 +277,7 @@ export default function MemberNotesPage() {
       )}
 
       {/* Add Note Button */}
-      <div className="mt-6" style={{ maxWidth: 320 }}>
+      <div className="mt-6 max-w-full sm:max-w-xs">
         <Button
           onClick={() => setShowAddNote(true)}
           disabled={selectedDate !== todayKey}
@@ -298,8 +297,8 @@ export default function MemberNotesPage() {
         className="relative z-50"
       >
         <div className="fixed inset-0 bg-black/40 backdrop-blur-sm" />
-        <div className="fixed inset-0 flex items-center justify-center p-4">
-          <Dialog.Panel className="bg-white w-full max-w-3xl rounded-lg shadow-lg p-6 max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 flex items-center justify-center p-2 sm:p-4">
+          <Dialog.Panel className="bg-white w-full max-w-3xl rounded-lg shadow-lg p-4 sm:p-6 max-h-[90vh] overflow-y-auto">
             <Dialog.Title className="text-lg font-semibold mb-4">
               Add New Note
             </Dialog.Title>
@@ -314,7 +313,7 @@ export default function MemberNotesPage() {
             </div>
 
             {/* Footer Buttons */}
-            <div className="flex justify-end gap-3 mt-6 pt-4 border-t">
+            <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-2 sm:gap-3 mt-6 pt-4 border-t">
               <Button
                 variant="outline"
                 onClick={() => {
@@ -322,6 +321,7 @@ export default function MemberNotesPage() {
                   setTranscript("");
                   setStructuredNote(null);
                 }}
+                className="w-full sm:w-auto"
               >
                 Cancel
               </Button>
@@ -348,7 +348,7 @@ export default function MemberNotesPage() {
                     setStructuredNote(null);
                   }
                 }}
-                className="bg-green-600 text-white hover:bg-green-700"
+                className="w-full sm:w-auto bg-green-600 text-white hover:bg-green-700"
               >
                 {isSaving ? "Updating..." : "Done"}
               </Button>

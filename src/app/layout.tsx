@@ -32,7 +32,7 @@ export default function RootLayout({
       >
         <Toaster>
           <Sidebar />
-          <main className="flex-1 p-6 overflow-y-auto">{children}</main>
+          <main className="flex-1 p-3 sm:p-4 md:p-6 overflow-y-auto">{children}</main>
         </Toaster>
       </body>
     </html>
@@ -48,7 +48,7 @@ function Sidebar() {
   ];
 
   return (
-    <nav className="w-56 h-screen sticky top-0 bg-white border-r border-gray-200 flex flex-col p-4">
+    <nav className="hidden md:flex w-56 h-screen sticky top-0 bg-white border-r border-gray-200 flex-col p-4">
       <h1 className="text-lg font-semibold mb-6 text-gray-800">
         Kibu Companion
       </h1>
