@@ -1,6 +1,6 @@
-## Kibu Companion – Voice + Smart Notes for Caregivers
+## Smart Note Companion – Voice enabled Smart Notes for Caregivers
 
-Kibu Companion helps caregivers capture voice notes and turns them into clear, compliant, structured service notes. It also summarizes a person’s day “so far,” extracts medications, and supports bilingual viewing (English/Spanish).
+This application helps caregivers capture voice notes and turns them into clear, compliant, structured service notes. It also summarizes a person’s day “so far,” extracts medications, and supports bilingual viewing (English/Spanish).
 
 ### What this app does
 - Record or type a caregiver note and generate a structured note with: activity, mood, prompts, participation, and a readable summary.
