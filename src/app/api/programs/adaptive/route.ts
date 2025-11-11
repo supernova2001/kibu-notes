@@ -99,15 +99,28 @@ export async function GET(req: NextRequest) {
         const metadata = match.metadata || {};
         const score = match.score || 0;
 
-        return {
-          id: match.id || metadata.id || String(Math.random()),
-          category: metadata.category || "Other",
-          name: metadata.name || metadata.title || "Unnamed Program",
-          description: metadata.description || metadata.desc || "",
+        // Ensure all values are properly typed as strings
+        const id = String(match.id || metadata.id || Math.random());
+        const category = String(metadata.category || "Other");
+        const name = String(metadata.name || metadata.title || "Unnamed Program");
+        const description = String(metadata.description || metadata.desc || "");
+        const link = String(metadata.link || metadata.url || `/programs/${match.id}`);
+
+        const program: Program = {
+          id,
+          category,
+          name,
+          description,
           similarity: score,
-          link: metadata.link || metadata.url || `/programs/${match.id}`,
-          ...(metadata.lifeSkills && { lifeSkills: metadata.lifeSkills }),
+          link,
         };
+
+        // Include lifeSkills if available (as an optional property)
+        if (metadata.lifeSkills && Array.isArray(metadata.lifeSkills)) {
+          (program as any).lifeSkills = metadata.lifeSkills;
+        }
+
+        return program;
       })
       .filter((program) => program.name !== "Unnamed Program")
       .sort((a, b) => (b.similarity || 0) - (a.similarity || 0))
