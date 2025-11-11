@@ -117,6 +117,22 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground;
+    /* Kibu brand gradient background */
+    background: linear-gradient(to bottom, #e6f2ff, #c0e0ff, #a0c8f0);
+    min-height: 100vh;
+  }
+  
+  /* Kibu brand color variables */
+  :root {
+    --kibu-blue-light: #e6f2ff;
+    --kibu-blue-medium: #c0e0ff;
+    --kibu-blue-dark: #a0c8f0;
+    --kibu-blue-accent: #f0f8ff;
+    --kibu-text-primary: #333333;
+    --kibu-text-secondary: #555555;
+    --kibu-border: #e0e0e0;
+    --kibu-black: #000000;
+    --kibu-white: #ffffff;
   }
 }

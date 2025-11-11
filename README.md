@@ -1,119 +1,267 @@
-## Kibu Companion – Voice + Smart Notes for Caregivers
+# Kibu Companion
 
-Kibu Companion helps caregivers capture voice notes and turns them into clear, compliant, structured service notes. It also summarizes a person’s day “so far,” extracts medications, and supports bilingual viewing (English/Spanish).
+A comprehensive voice-powered note-taking system with intelligent program recommendations and progress tracking for care providers. Built with Next.js, featuring advanced RAG (Retrieval-Augmented Generation) and semantic search capabilities.
 
-### What this app does
-- Record or type a caregiver note and generate a structured note with: activity, mood, prompts, participation, and a readable summary.
-- Extract medications mentioned in the note (name, dose, route, time, status).
-- Produce a running “Summary so far” that aggregates notes up to each note’s timestamp.
-- View per‑note medications and summary next to the note timeline.
-- Bilingual viewing (English/Spanish): toggle per note row; Spanish notes are translated to English for processing and saved with both languages.
-- Export PDF for the day (English only, today).
+## 🌟 Features
 
-### Screens & flows
-- People → Member Notes (timeline, per‑note summaries/meds, add note modal)
-- Add Note modal → compliance check → generate structured note → save
+### Core Features
+- **Voice Note Recording** - Browser-based speech-to-text transcription
+- **Smart Note Structuring** - AI-powered extraction of mood, participation, activities, medications, and follow-ups
+- **Historical Program Recommendations** - Personalized suggestions based on 21-day progress analysis using RAG
+- **Note-Level Program Recommendations** - Instant program suggestions based on session content
+- **Progress Insights & Analytics** - Interactive charts and visualizations
+- **Bilingual Support** - English and Spanish interface
+- **PDF Export** - Professional note exports
+- **Timeline View** - Chronological note organization
 
----
+### 🧠 Advanced AI Features
 
-## Tech Stack
+#### Historical Recommendations (RAG & Semantic Search)
+- Analyzes member progress over the last 21 days
+- Uses semantic search to match programs by meaning, not just keywords
+- Identifies improving, stable, or declining trends
+- Provides AI-generated insights explaining recommendations
+- Considers mood, participation, independence, and activity patterns
 
-- Next.js 16 (App Router)
-- TypeScript
-- Vercel Edge Runtime for API routes
-- OpenAI (extraction, summaries, translation)
-- Supabase (Postgres + JS client) for persistence
-- Tailwind/shadcn‑style UI components
+#### Note-Level Recommendations
+- Instant program suggestions when creating notes
+- AI-powered keyword extraction
+- Semantic matching with similarity scores
+- Automatically saves recommendations with notes
 
----
+## 🚀 Technology Stack
 
-## Running locally
+### Frontend
+- **Next.js 16** - React framework
+- **TypeScript** - Type safety
+- **Tailwind CSS** - Styling
+- **Radix UI** - Accessible components
+- **Nivo** - Data visualization
 
-### 1) Prerequisites
-- Node 18+
-- A Supabase project with two tables:
-  - `members(id uuid/text, name text, created_at timestamptz default now())`
-  - `notes(id uuid/text, member_id references members(id), session_date text/timestamptz, raw_text text, structured_json jsonb, created_at timestamptz default now())`
-- An OpenAI API key
+### Backend & AI
+- **OpenAI GPT-4** - Note structuring, keyword extraction, insights
+- **OpenAI Embeddings** (text-embedding-3-small) - Semantic understanding
+- **Pinecone** - Vector database for semantic search
+- **Supabase** - Database and authentication
+- **Web Speech API** - Voice recognition
 
-### 2) Environment variables
-Create `kibu-notes/.env.local` and add:
+### Key Technologies
+- **RAG (Retrieval-Augmented Generation)** - Combines semantic search with AI generation
+- **Semantic Search** - Understanding meaning, not just keywords
+- **Vector Embeddings** - 512-dimensional representations of text
+- **Cosine Similarity** - Matching programs to member progress
+
+## 📋 Prerequisites
+
+- Node.js 18+ 
+- npm or yarn
+- Supabase account
+- Pinecone account (free tier available)
+- OpenAI API key
+
+## 🛠️ Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd kibu-notes
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Set up environment variables**
+   Create a `.env.local` file in the root directory:
+   ```env
+   # Supabase Configuration
+   NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+   SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
+
+   # Pinecone Configuration
+   PINECONE_API_KEY=your_pinecone_api_key
+   PINECONE_INDEX_NAME=notes-companion
+
+   # OpenAI Configuration
+   OPENAI_API_KEY=your_openai_api_key
+   ```
+
+4. **Set up Supabase database**
+   - Create a Supabase project
+   - Run the schema file: `supabase_schema_program_recommendations.sql`
+   - Ensure you have `members` and `notes` tables
+
+5. **Set up Pinecone**
+   - Create a Pinecone account
+   - Create an index with dimension 512 (for text-embedding-3-small)
+   - Populate with program data:
+     ```bash
+     npm run populate-pinecone
+     ```
+
+6. **Run the development server**
+   ```bash
+   npm run dev
+   ```
+
+   Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## 🏗️ Project Structure
 
 ```
-OPENAI_API_KEY=sk-...
-NEXT_PUBLIC_SUPABASE_URL=https://<your-ref>.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJ...
+kibu-notes/
+├── src/
+│   ├── app/                    # Next.js app directory
+│   │   ├── api/               # API routes
+│   │   │   ├── programs/      # Program recommendations APIs
+│   │   │   ├── members/       # Member management APIs
+│   │   │   └── notes/         # Note management APIs
+│   │   ├── features/          # Features documentation page
+│   │   ├── people/            # Member notes pages
+│   │   └── layout.tsx         # Root layout
+│   ├── components/            # React components
+│   │   ├── AdaptiveRecommendations.tsx
+│   │   ├── InsightsSection.tsx
+│   │   ├── note-editor.tsx
+│   │   └── ui/               # UI components
+│   └── lib/                  # Utility libraries
+│       ├── embeddings.ts     # OpenAI embeddings
+│       ├── pinecone.ts       # Pinecone integration
+│       ├── supabase.ts       # Supabase client
+│       └── noteEmbeddings.ts # Note embedding logic
+├── scripts/
+│   └── populate-pinecone.js  # Script to populate Pinecone
+└── public/                   # Static assets
 ```
 
-### 3) Install & run
-```
-npm install
-npm run dev
-```
-Visit http://localhost:3000
+## 🔑 Environment Variables
 
-Home redirects to People. Open a person → Add Note.
+### Required
+- `NEXT_PUBLIC_SUPABASE_URL` - Your Supabase project URL
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY` - Supabase anonymous key
+- `SUPABASE_SERVICE_ROLE_KEY` - Supabase service role key (for server-side operations)
+- `PINECONE_API_KEY` - Pinecone API key
+- `OPENAI_API_KEY` - OpenAI API key
+
+### Optional
+- `PINECONE_INDEX_NAME` - Pinecone index name (default: "notes-companion")
+
+## 🎯 Usage
+
+### Adding Notes
+1. Navigate to a member's page
+2. Click "Add Note"
+3. Record voice note or type manually
+4. System automatically structures the note and suggests programs
+
+### Viewing Recommendations
+- **Historical Recommendations** (Left Sidebar) - Based on last 21 days of progress
+- **Note-Level Recommendations** (Right Sidebar) - Based on current note content
+
+### Viewing Insights
+1. Click "View Insights" on a member's page
+2. Explore interactive charts and analytics
+3. Track mood, participation, and progress trends
+
+## 🧬 How RAG Works
+
+### Historical Recommendations Process
+
+1. **Note Collection & Embedding Generation**
+   - Each note is converted to a 512-dimensional embedding vector
+   - Captures semantic meaning of mood, activities, participation, etc.
+
+2. **Storage in Vector Database**
+   - Note embeddings stored in Pinecone with metadata
+   - Program embeddings stored as searchable knowledge base
+
+3. **Historical Context Retrieval**
+   - Retrieves all note embeddings from last 21 days
+   - Filters by member ID and date range
+
+4. **Progress Vector Creation**
+   - Averages all note embeddings to create a "progress vector"
+   - Represents member's overall trajectory
+
+5. **Trend Analysis**
+   - Analyzes mood, participation, and independence scores
+   - Identifies improving, stable, or declining trends
+
+6. **Semantic Search**
+   - Uses progress vector to search program database
+   - Matches programs by meaning using cosine similarity
+   - Finds relevant programs even if keywords don't match exactly
+
+7. **Program Ranking**
+   - Programs ranked by similarity scores (0-1)
+   - Top matches filtered for diversity and relevance
+
+8. **AI-Generated Insights**
+   - GPT-4 generates personalized recommendation explanations
+   - Explains why programs are recommended and focus areas
+
+### Note-Level Recommendations Process
+
+1. **Keyword Extraction** - AI extracts relevant keywords and concepts
+2. **Semantic Search** - Searches programs using extracted keywords
+3. **Similarity Scoring** - Each program gets a relevance score
+4. **Program Ranking** - Programs ranked by relevance
+5. **Automatic Saving** - Recommendations saved with note and date
+
+## 📊 Data Visualization
+
+The insights section provides:
+- Multi-metric trend line charts
+- Mood distribution over time
+- Activity performance analysis
+- Participation vs prompts correlation
+- Weekly and daily patterns
+- Medication compliance tracking
+- Progress scorecards
+
+## 🔧 Development
+
+### Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
+- `npm run populate-pinecone` - Populate Pinecone with program data
+
+### API Routes
+
+- `GET /api/programs/adaptive` - Get historical recommendations
+- `POST /api/programs/suggest` - Get note-level recommendations
+- `GET /api/programs/recommendations` - Get stored recommendations
+- `POST /api/notes` - Create a new note
+- `GET /api/members/[id]/notes` - Get member's notes
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Submit a pull request
+
+## 📝 License
+
+This project is private and proprietary.
+
+## 🙏 Acknowledgments
+
+- OpenAI for GPT-4 and embeddings API
+- Pinecone for vector database services
+- Supabase for backend infrastructure
+- Next.js team for the amazing framework
+
+## 📞 Support
+
+For issues and questions, please contact the development team.
 
 ---
 
-## Deploying to Vercel
+**Kibu Companion** - Intelligent Note-Taking for Care Providers
 
-### Via Dashboard
-1) Import the repo → framework auto‑detect: Next.js
-2) Set Environment Variables (Production + Preview):
-   - `OPENAI_API_KEY`
-   - `NEXT_PUBLIC_SUPABASE_URL`
-   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-3) Deploy
-
-### Via CLI (production)
-```
-npm i -g vercel
-vercel login
-vercel        # first‑time link
-vercel env add OPENAI_API_KEY production
-vercel env add NEXT_PUBLIC_SUPABASE_URL production
-vercel env add NEXT_PUBLIC_SUPABASE_ANON_KEY production
-vercel deploy --prod
-```
-
-> If build complains about an unused/empty API route, remove or stub it (export a simple 501 GET/POST handler).
-
----
-
-## Feature details
-
-### Medications extraction
-Medication info is extracted from the caregiver note using OpenAI and saved in `structured_json.medications`. The UI shows medications next to each note.
-
-### “Summary so far”
-For each note, the server aggregates all notes up to that timestamp and generates a short daily‑so‑far summary, saved alongside the note. The UI shows it per‑note (no clicking needed).
-
-### Bilingual viewing (EN/ES)
-- On save, non‑English notes are translated to English for processing (accuracy), and the bilingual content is saved under `structured_json.i18n`.
-- Each row has a small EN/ES selector to switch display for that note’s content and summary.
-
----
-
-## Troubleshooting
-
-- Build error “file is not a module”: remove or stub empty API routes (they must export GET/POST).
-- “Failed to collect page data …/notes”: usually missing Supabase env vars in Vercel.
-- Medications empty: ensure `OPENAI_API_KEY` is set and reachable; some notes may have no meds.
-
----
-
-## Roadmap / Future upgrades
-
-- PDF i18n: export in Spanish as well as English.
-- Access controls / auth for caregiver teams.
-- Better medication normalization (mapped routes/status, localizable labels).
-- Offline capture queue; background sync.
-- Evented integrations (calendar tasks for follow‑ups, notifications).
-- Analytics/insights page: trends in mood, participation, prompts.
-
----
-
-## License / Notes
-
-Prototype quality code intended for demos and iteration. Please keep credentials out of source control and set all keys in environment variables.

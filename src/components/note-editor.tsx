@@ -7,15 +7,24 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Input } from "@/components/ui/input";
 import { StructuredNoteType } from "@/lib/schemas";
 import { useToast } from "@/components/ui/toast";
+import { Program } from "@/components/ProgramSuggestions";
 
 export default function NoteEditor({
   transcript,
   memberId,
   memberName,
+  onProgramsLoaded,
+  onProgramsLoadingChange,
+  selectedProgramIds = [],
+  onProgramSelectionChange,
 }: {
   transcript: string;
   memberId?: string;
   memberName?: string;
+  onProgramsLoaded?: (programs: Program[], noteTime: string) => void;
+  onProgramsLoadingChange?: (loading: boolean) => void;
+  selectedProgramIds?: string[];
+  onProgramSelectionChange?: (ids: string[]) => void;
 }) {
   const [freeText, setFreeText] = useState(transcript);
   const [loading, setLoading] = useState(false);
@@ -25,6 +34,9 @@ export default function NoteEditor({
   const [missingFields, setMissingFields] = useState<string[]>([]);
   const [showModal, setShowModal] = useState(false);
   const [extraDetails, setExtraDetails] = useState<Record<string, string>>({});
+  
+  // Local loading state (will notify parent)
+  const [loadingPrograms, setLoadingPrograms] = useState(false);
 
   useEffect(() => {
     if (transcript && transcript.trim().length > 0) {
@@ -80,6 +92,7 @@ export default function NoteEditor({
   // STEP 3: Generate the structured compliant note
   const generateStructuredNote = async (text: string) => {
     setLoading(true);
+    const sessionDate = new Date().toISOString();
     const res = await fetch("/api/notes", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -87,7 +100,7 @@ export default function NoteEditor({
         memberId: memberId,
         memberName: memberName || extraDetails["member name"] || undefined,
         activityType: extraDetails["activity type"] || "General",
-        sessionDate: new Date().toISOString(),
+        sessionDate: sessionDate,
         freeText: text,
         language: "en",
       }),
@@ -99,8 +112,83 @@ export default function NoteEditor({
     if (res.ok) {
       setNote(data);
       toast({ title: "Note saved", description: "Summary and medications extracted.", variant: "success" });
+      // Fetch program suggestions after note is generated
+      // Pass memberId and sessionDate so recommendations can be saved to database
+      await fetchProgramSuggestions(text, data.summary || "", memberId, data.noteId, sessionDate);
     } else {
       toast({ title: "Save failed", description: data.error || "Failed to generate note", variant: "error" });
+    }
+  };
+
+  // STEP 4: Fetch program suggestions based on transcript/summary using RAG
+  const fetchProgramSuggestions = async (
+    transcript: string, 
+    summary: string,
+    memberId?: string,
+    noteId?: string,
+    sessionDate?: string
+  ) => {
+    const loading = true;
+    setLoadingPrograms(loading);
+    onProgramsLoadingChange?.(loading);
+    
+    // Reset selections if parent handles it
+    if (onProgramSelectionChange) {
+      onProgramSelectionChange([]);
+    }
+    
+    try {
+      // Call the RAG-based program suggestion API
+      const response = await fetch("/api/programs/suggest", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          transcript,
+          summary,
+          memberId,
+          noteId,
+          sessionDate: sessionDate || new Date().toISOString(),
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || `API error: ${response.status}`);
+      }
+
+      const data = await response.json();
+      const programs: Program[] = data.programs || [];
+      
+      // Log extracted keywords for debugging
+      if (data.keywords && data.keywords.length > 0) {
+        console.log("Extracted keywords:", data.keywords);
+      }
+      
+      const noteTime = new Date().toISOString();
+      onProgramsLoaded?.(programs, noteTime);
+      
+      if (programs.length === 0) {
+        toast({
+          title: "No suggestions found",
+          description: "No matching programs found for this note. Try adding more details.",
+          variant: "default",
+        });
+      }
+    } catch (error) {
+      console.error("Failed to fetch program suggestions:", error);
+      toast({
+        title: "Suggestions unavailable",
+        description: error instanceof Error 
+          ? `Could not load program suggestions: ${error.message}` 
+          : "Could not load program suggestions. You can still save the note.",
+        variant: "error",
+      });
+    } finally {
+      const loading = false;
+      setLoadingPrograms(loading);
+      onProgramsLoadingChange?.(loading);
     }
   };
 

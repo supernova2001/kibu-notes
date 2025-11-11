@@ -1,0 +1,314 @@
+[
+  {
+    "id": "program-001",
+    "title": "Meal Preparation and Cooking Skills",
+    "url": "/programs/meal-preparation",
+    "instructor": "Sarah Johnson",
+    "category": "Daily Living",
+    "synopsis": "This comprehensive program teaches individuals essential meal preparation and cooking skills for independent living. Topics covered include recipe reading and comprehension, ingredient selection and shopping, kitchen safety and hygiene, basic cooking techniques (boiling, baking, sautéing), meal planning and portion control, and food storage and preservation. Participants will learn to prepare simple to moderate complexity meals, understand nutritional basics, and develop confidence in the kitchen. Key outcomes include increased independence in meal preparation, improved kitchen safety awareness, enhanced nutritional knowledge, and the ability to follow multi-step recipes. Concepts covered include time management, organization, problem-solving in cooking scenarios, and adapting recipes to dietary needs.",
+    "keywords": [
+      "cooking",
+      "meal preparation",
+      "kitchen skills",
+      "nutrition",
+      "independence",
+      "recipe reading",
+      "food safety",
+      "meal planning"
+    ],
+    "lifeSkills": [
+      "cooking",
+      "meal planning",
+      "kitchen safety",
+      "nutrition",
+      "independence",
+      "time management"
+    ]
+  },
+  {
+    "id": "program-002",
+    "title": "Personal Hygiene and Self-Care",
+    "url": "/programs/personal-hygiene",
+    "instructor": "Michael Chen",
+    "category": "Daily Living",
+    "synopsis": "A foundational program focusing on personal hygiene routines and self-care practices essential for daily living. Topics covered include oral care (brushing, flossing, dental hygiene), bathing and showering techniques, grooming (hair care, shaving, nail care), skincare and moisturizing, dressing and clothing care, and maintaining personal cleanliness throughout the day. Participants develop routines for morning and evening hygiene, learn to identify when hygiene tasks are needed, and practice maintaining personal appearance. Key outcomes include establishment of consistent hygiene routines, increased self-awareness of personal care needs, improved confidence in self-care abilities, and better understanding of health-related hygiene practices. Concepts covered include routine building, self-monitoring, attention to detail, and personal responsibility.",
+    "keywords": [
+      "hygiene",
+      "self-care",
+      "personal care",
+      "bathing",
+      "grooming",
+      "oral care",
+      "health",
+      "routine"
+    ],
+    "lifeSkills": [
+      "personal hygiene",
+      "self-care",
+      "routine building",
+      "health awareness",
+      "independence"
+    ]
+  },
+  {
+    "id": "program-003",
+    "title": "Social Skills and Peer Interaction",
+    "url": "/programs/social-skills",
+    "instructor": "Emily Rodriguez",
+    "category": "Social Skills",
+    "synopsis": "This program enhances social communication and peer interaction skills through structured activities and role-playing. Topics covered include initiating and maintaining conversations, active listening and responding appropriately, understanding social cues and body language, turn-taking in group settings, conflict resolution and problem-solving, expressing emotions appropriately, and building friendships. Participants practice social scenarios in safe, supportive environments and learn to navigate various social situations. Key outcomes include improved communication skills, increased confidence in social settings, better understanding of social norms, enhanced ability to form and maintain relationships, and improved conflict resolution abilities. Concepts covered include empathy, perspective-taking, emotional regulation, social boundaries, and collaborative problem-solving.",
+    "keywords": [
+      "social skills",
+      "communication",
+      "peer interaction",
+      "friendship",
+      "conversation",
+      "conflict resolution",
+      "empathy",
+      "social cues"
+    ],
+    "lifeSkills": [
+      "communication",
+      "social interaction",
+      "empathy",
+      "conflict resolution",
+      "relationship building",
+      "emotional regulation"
+    ]
+  },
+  {
+    "id": "program-004",
+    "title": "Following Multi-Step Directions",
+    "url": "/programs/following-directions",
+    "instructor": "David Thompson",
+    "category": "Communication",
+    "synopsis": "A structured program designed to improve the ability to understand, remember, and follow multi-step instructions. Topics covered include listening skills and attention, breaking down complex instructions into steps, memory techniques and strategies, asking clarifying questions, sequencing tasks in correct order, and completing tasks independently. Participants work through increasingly complex instruction sets and learn strategies for managing multi-step processes. Key outcomes include improved listening comprehension, enhanced memory for sequential information, increased ability to follow complex instructions, better task completion rates, and increased independence in following directions. Concepts covered include working memory, attention to detail, sequencing, problem-solving, and self-advocacy.",
+    "keywords": [
+      "following directions",
+      "listening",
+      "instructions",
+      "sequencing",
+      "memory",
+      "task completion",
+      "attention",
+      "comprehension"
+    ],
+    "lifeSkills": [
+      "listening skills",
+      "memory",
+      "sequencing",
+      "task completion",
+      "attention",
+      "independence"
+    ]
+  },
+  {
+    "id": "program-005",
+    "title": "Turn-Taking and Group Participation",
+    "url": "/programs/turn-taking",
+    "instructor": "Lisa Anderson",
+    "category": "Social Skills",
+    "synopsis": "This program focuses on developing turn-taking skills and positive group participation behaviors. Topics covered include understanding turn-taking rules in different contexts, waiting patiently for one's turn, recognizing when it's your turn, respecting others' turns, participating appropriately in group activities, sharing materials and space, and handling frustration when waiting. Participants practice in various group settings including games, discussions, and collaborative activities. Key outcomes include improved patience and self-control, better understanding of social rules, enhanced group participation skills, increased respect for others, and improved ability to wait appropriately. Concepts covered include impulse control, patience, respect, social awareness, and emotional regulation.",
+    "keywords": [
+      "turn-taking",
+      "group participation",
+      "patience",
+      "waiting",
+      "sharing",
+      "respect",
+      "social rules",
+      "self-control"
+    ],
+    "lifeSkills": [
+      "turn-taking",
+      "patience",
+      "respect",
+      "self-control",
+      "group participation",
+      "social awareness"
+    ]
+  },
+  {
+    "id": "program-006",
+    "title": "Money Management and Budgeting",
+    "url": "/programs/money-management",
+    "instructor": "Robert Martinez",
+    "category": "Daily Living",
+    "synopsis": "A practical program teaching essential money management and budgeting skills for independent living. Topics covered include identifying coins and bills, counting money and making change, understanding basic banking concepts, creating and following a budget, tracking expenses, comparison shopping, understanding needs vs. wants, and safe money handling practices. Participants practice real-world scenarios including shopping, bill payment, and budget management. Key outcomes include improved money recognition and counting skills, ability to create and maintain a budget, better understanding of financial concepts, increased confidence in money management, and improved decision-making regarding spending. Concepts covered include numeracy, planning, decision-making, financial responsibility, and practical math application.",
+    "keywords": [
+      "money management",
+      "budgeting",
+      "financial skills",
+      "banking",
+      "shopping",
+      "expenses",
+      "financial responsibility",
+      "money counting"
+    ],
+    "lifeSkills": [
+      "money management",
+      "budgeting",
+      "financial responsibility",
+      "numeracy",
+      "decision-making",
+      "independence"
+    ]
+  },
+  {
+    "id": "program-007",
+    "title": "Time Management and Scheduling",
+    "url": "/programs/time-management",
+    "instructor": "Jennifer Lee",
+    "category": "Daily Living",
+    "synopsis": "This program helps individuals develop time management skills and learn to create and follow schedules. Topics covered include reading clocks and telling time, understanding calendars and dates, creating daily and weekly schedules, prioritizing tasks, estimating time needed for activities, managing transitions between activities, and using time management tools. Participants practice creating schedules for various scenarios and learn to adapt when plans change. Key outcomes include improved time awareness, ability to create and follow schedules, better task prioritization, increased punctuality, enhanced ability to manage daily routines, and improved planning skills. Concepts covered include time concepts, organization, planning, flexibility, and routine management.",
+    "keywords": [
+      "time management",
+      "scheduling",
+      "time awareness",
+      "planning",
+      "organization",
+      "routines",
+      "punctuality",
+      "prioritization"
+    ],
+    "lifeSkills": [
+      "time management",
+      "planning",
+      "organization",
+      "scheduling",
+      "routine management",
+      "independence"
+    ]
+  },
+  {
+    "id": "program-008",
+    "title": "Community Navigation and Transportation",
+    "url": "/programs/community-navigation",
+    "instructor": "James Wilson",
+    "category": "Community Integration",
+    "synopsis": "A comprehensive program teaching skills for navigating the community and using transportation systems safely. Topics covered include reading maps and directions, using public transportation, understanding traffic signs and signals, pedestrian safety, planning routes, asking for directions, using GPS and navigation apps, and identifying landmarks. Participants practice in real community settings with appropriate support. Key outcomes include increased confidence in community navigation, ability to use public transportation independently, improved safety awareness, better understanding of community resources, and enhanced problem-solving in unfamiliar situations. Concepts covered include spatial awareness, safety awareness, problem-solving, independence, and community awareness.",
+    "keywords": [
+      "community navigation",
+      "transportation",
+      "public transit",
+      "safety",
+      "directions",
+      "maps",
+      "independence",
+      "community integration"
+    ],
+    "lifeSkills": [
+      "community navigation",
+      "transportation",
+      "safety awareness",
+      "independence",
+      "problem-solving",
+      "spatial awareness"
+    ]
+  },
+  {
+    "id": "program-009",
+    "title": "Job Readiness and Workplace Skills",
+    "url": "/programs/job-readiness",
+    "instructor": "Patricia Brown",
+    "category": "Vocational",
+    "synopsis": "This program prepares individuals for employment by teaching essential workplace skills and job readiness. Topics covered include resume writing and job applications, interview skills and practice, workplace etiquette and professionalism, following workplace instructions, time management at work, working with supervisors and coworkers, handling workplace challenges, and maintaining employment. Participants practice job search skills and workplace scenarios. Key outcomes include improved job search skills, better interview performance, understanding of workplace expectations, increased confidence in job-seeking, enhanced workplace communication, and better ability to maintain employment. Concepts covered include professionalism, communication, responsibility, problem-solving, and work ethic.",
+    "keywords": [
+      "job readiness",
+      "employment",
+      "workplace skills",
+      "interviewing",
+      "resume",
+      "professionalism",
+      "vocational",
+      "career"
+    ],
+    "lifeSkills": [
+      "job readiness",
+      "professionalism",
+      "communication",
+      "responsibility",
+      "work ethic",
+      "independence"
+    ]
+  },
+  {
+    "id": "program-010",
+    "title": "Emotional Regulation and Coping Strategies",
+    "url": "/programs/emotional-regulation",
+    "instructor": "Amanda Taylor",
+    "category": "Mental Health",
+    "synopsis": "A therapeutic program focusing on emotional awareness, regulation, and healthy coping strategies. Topics covered include identifying and labeling emotions, understanding emotional triggers, recognizing physical signs of emotions, developing coping strategies, stress management techniques, relaxation methods, expressing emotions appropriately, and seeking help when needed. Participants learn through discussion, practice, and real-world application. Key outcomes include improved emotional awareness, better ability to regulate emotions, increased use of healthy coping strategies, reduced emotional outbursts, enhanced self-awareness, and improved ability to communicate feelings. Concepts covered include emotional intelligence, self-regulation, coping skills, self-awareness, and mental health awareness.",
+    "keywords": [
+      "emotional regulation",
+      "coping strategies",
+      "emotions",
+      "stress management",
+      "mental health",
+      "self-awareness",
+      "emotional intelligence",
+      "relaxation"
+    ],
+    "lifeSkills": [
+      "emotional regulation",
+      "coping skills",
+      "self-awareness",
+      "stress management",
+      "emotional intelligence",
+      "mental health"
+    ]
+  },
+  {
+    "id": "program-011",
+    "title": "Household Cleaning and Maintenance",
+    "url": "/programs/household-cleaning",
+    "instructor": "Christopher Davis",
+    "category": "Daily Living",
+    "synopsis": "This program teaches essential household cleaning and maintenance skills for independent living. Topics covered include cleaning different surfaces and rooms, using cleaning products safely, organizing living spaces, basic home maintenance tasks, laundry skills (washing, drying, folding), waste management and recycling, and creating cleaning schedules. Participants practice in real or simulated home environments. Key outcomes include ability to maintain a clean living space, understanding of cleaning products and safety, improved organization skills, increased independence in household tasks, better time management for chores, and enhanced pride in living space. Concepts covered include organization, safety awareness, routine building, attention to detail, and home management.",
+    "keywords": [
+      "cleaning",
+      "household maintenance",
+      "laundry",
+      "organization",
+      "home care",
+      "chores",
+      "independence",
+      "housekeeping"
+    ],
+    "lifeSkills": [
+      "cleaning",
+      "organization",
+      "household maintenance",
+      "independence",
+      "routine building",
+      "home management"
+    ]
+  },
+  {
+    "id": "program-012",
+    "title": "Healthy Eating and Nutrition",
+    "url": "/programs/healthy-eating",
+    "instructor": "Nicole Garcia",
+    "category": "Health & Wellness",
+    "synopsis": "A nutrition-focused program teaching healthy eating habits and food choices. Topics covered include understanding food groups and nutrition, reading nutrition labels, making healthy food choices, meal planning for nutrition, understanding portion sizes, special dietary needs and restrictions, grocery shopping for health, and preparing balanced meals. Participants learn through hands-on activities and practical application. Key outcomes include improved understanding of nutrition, ability to make healthier food choices, better meal planning skills, increased awareness of dietary needs, enhanced ability to read nutrition information, and improved overall health knowledge. Concepts covered include nutrition science, decision-making, planning, health awareness, and self-care.",
+    "keywords": [
+      "nutrition",
+      "healthy eating",
+      "diet",
+      "food choices",
+      "meal planning",
+      "health",
+      "wellness",
+      "nutrition labels"
+    ],
+    "lifeSkills": [
+      "nutrition",
+      "health awareness",
+      "decision-making",
+      "meal planning",
+      "self-care",
+      "wellness"
+    ]
+  }
+]
+

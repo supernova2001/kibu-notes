@@ -121,7 +121,24 @@ export async function POST(req: NextRequest) {
       .from("notes")
       .update({ structured_json: updatedStructured })
       .eq("id", inserted.id);
-    return NextResponse.json(updatedStructured);
+
+    // Store note embedding for adaptive recommendations (async, don't block)
+    try {
+      const { storeNoteEmbedding } = await import("@/lib/noteEmbeddings");
+      await storeNoteEmbedding({
+        noteId: inserted.id,
+        memberId: inserted.member_id,
+        sessionDate: sessionDate,
+        structuredNote: updatedStructured,
+      });
+      console.log(`[POST /api/notes] ✅ Stored note embedding for adaptive recommendations`);
+    } catch (embeddingError) {
+      // Log but don't fail the note save if embedding storage fails
+      console.error("[POST /api/notes] Failed to store note embedding:", embeddingError);
+    }
+
+    // Include note ID in response so frontend can link recommendations
+    return NextResponse.json({ ...updatedStructured, noteId: inserted.id });
   } catch (e) {
     // If summary generation fails, return original structured note without blocking save
     return NextResponse.json(parsedJson);
