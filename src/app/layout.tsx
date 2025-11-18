@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Kibu Companion",
+  title: "Notes Companion",
   description: "Voice + Smart Note Companion for Care Providers",
 };
 

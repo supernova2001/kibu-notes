@@ -225,7 +225,7 @@ export default function PeoplePage() {
       )}
 
           <footer className="mt-12 text-xs" style={{ color: '#555555' }}>
-            © 2025 Kibu Prototype
+            © 2025 Janakiram (Ram)
           </footer>
 
           {/* Add Member Modal */}

@@ -32,7 +32,7 @@ export default function FeaturesPage() {
           {/* Header */}
           <div className="text-center mb-12">
             <h1 className="text-4xl font-bold mb-4" style={{ color: '#333333' }}>
-              Kibu Companion Features
+              Notes Companion Features
             </h1>
             <p className="text-lg max-w-2xl mx-auto" style={{ color: '#333333' }}>
               A comprehensive voice-powered note-taking system with intelligent program recommendations and progress tracking
@@ -349,7 +349,7 @@ export default function FeaturesPage() {
 
           {/* Footer */}
           <div className="mt-12 text-center text-sm" style={{ color: '#555555' }}>
-            <p>Kibu Companion - Intelligent Note-Taking for Care Providers</p>
+            <p>Notes Companion - Intelligent Note-Taking for Care Providers</p>
           </div>
         </div>
       </div>

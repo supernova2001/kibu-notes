@@ -15,7 +15,7 @@ export default function NavBar() {
           <div className="flex items-center gap-3">
             <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
               <h1 className="text-lg font-semibold" style={{ color: '#333333' }}>
-                Kibu Companion
+                Notes Companion
               </h1>
             </Link>
           </div>
